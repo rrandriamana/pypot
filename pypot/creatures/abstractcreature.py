@@ -140,11 +140,12 @@ class AbstractPoppyCreature(Robot):
         if use_snap:
             poppy_creature.snap = SnapRobotServer(
                 poppy_creature, snap_host, snap_port, quiet=snap_quiet)
-            snap_url = 'http://snap.berkeley.edu/snapsource/snap.html'
-            block_url = 'http://{}:{}/snap-blocks.xml'.format(find_local_ip(), snap_port)
-            url = '{}#open:{}'.format(snap_url, block_url)
+            snap_url = 'http://localhost:8601/'
+            #block_url = 'http://{}:{}/snap-blocks.xml'.format(find_local_ip(), snap_port)
+            #url = '{}#open:{}'.format(snap_url, block_url)
+            url = snap_url
             logger.info('SnapRobotServer is now running on: http://{}:{}\n'.format(snap_host, snap_port))
-            logger.info('You can open Snap! interface with loaded blocks at "{}"\n'.format(url))
+            logger.info('You can open Scratch interface with loaded blocks at "{}"\n'.format(url))
 
         if use_http:
             from pypot.server.httpserver import HTTPRobotServer
