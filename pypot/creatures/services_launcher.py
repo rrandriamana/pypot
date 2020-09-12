@@ -72,7 +72,7 @@ def poppy_params_from_args(args):
 def main():
     parser = argparse.ArgumentParser(
         description=('Poppy services launcher. Use it to quickly instantiate a ' +
-                     'poppy creature with Snap!, an http server, or a remote robot.'),
+                     'poppy creature with Scratch, an http server, or a remote robot.'),
         epilog="""
 Examples:
 * poppy-services --snap poppy-torso
@@ -93,13 +93,13 @@ Examples:
                         help='start a simulated dummy robot and the HTTP API to connect to the viewer on simu.poppy-project.org',
                         action='store_true')
     parser.add_argument('--snap',
-                        help='start a Snap! robot server',
+                        help='start a Scratch robot server',
                         action='store_true')
     parser.add_argument('--snap-port',
-                        help='port used by the Snap! server',
+                        help='port used by the Scratch server',
                         default=6969, type=int)
     parser.add_argument('-nb', '--no-browser',
-                        help='avoid automatic start of Snap! in web browser',
+                        help='avoid automatic start of Scratch in web browser',
                         action='store_true')
     parser.add_argument('--http',
                         help='start a http robot server',
@@ -185,20 +185,20 @@ Examples:
         snap_static_port = 8888
         snap_static_server = HTTPServer(("0.0.0.0", snap_static_port), SimpleHTTPRequestHandler)
 
-        from pypot.vpl.snap import download_snap_interactively
-        static_app = download_snap_interactively()
-        if static_app is None:
-            print("The static server was not started because the VPL app has not been downloaded")
-        else:
-            os.chdir(static_app)
-            snap_static_server_process = Process(target=snap_static_server.serve_forever, args=())
-            static_server_started = True
-            snap_static_server_process.start()
+        #from pypot.vpl.snap import download_snap_interactively
+        #static_app = download_snap_interactively()
+        #if static_app is None:
+        #    print("The static server was not started because the VPL app has not been downloaded")
+        #else:
+        #os.chdir(static_app)
+        snap_static_server_process = Process(target=snap_static_server.serve_forever, args=())
+        static_server_started = True
+        snap_static_server_process.start()
 
-            snap_url = 'http://127.0.0.1:{}/snap.html'.format(snap_static_port)
-            block_url = 'http://{}:{}/snap-blocks.xml'.format(
-                find_local_ip(), args.snap_port)
-            url = '{}#open:{}'.format(snap_url, block_url)
+        #snap_url = 'http://127.0.0.1:{}/snap.html'.format(snap_static_port)
+        #block_url = 'http://{}:{}/snap-blocks.xml'.format(
+        #    find_local_ip(), args.snap_port)
+        url = 'http://localhost:8601/' #'{}#open:{}'.format(snap_url, block_url)
 
     with closing(start_poppy_with_services(args)):
 
