@@ -1,9 +1,11 @@
 import sys
 import tempfile
+import subprocess
 from wget import download
 from urllib.error import URLError
 from zipfile import ZipFile
 from pathlib import Path
+
 
 def get_pypot_datadir(app_name="pypot"):
     """
@@ -30,7 +32,7 @@ def get_pypot_datadir(app_name="pypot"):
     return pypot_dir
 
 
-def download_vpl_interactively(vpl_app_name, vpl_app_url, extract=False):
+def download_vpl_interactively(vpl_app_name, extract=False):
     """
     Download the specified Visual Programming langage web app and returns its path.
     If it couldn't be downloaded, return None
@@ -51,17 +53,19 @@ def download_vpl_interactively(vpl_app_name, vpl_app_url, extract=False):
                     pass
                 print("Downloading...")
                 try:
-                    downloaded_app = download(vpl_app_url, tempfile.gettempdir())
+                    #downloaded_app = download(vpl_app_url, tempfile.gettempdir())
+                    subprocess.Popen(['sh', 'scratch.sh'])
                 except URLError as e:
-                    print("Cannot download the {] app from {}: {}".format(vpl_app_name, vpl_app_url, str(e)), file=sys.stderr)
+                    print("Cannot download the {} app : {}".format(vpl_app_name, str(e)), file=sys.stderr)
                 else:
-                    try:
-                        with ZipFile(downloaded_app, 'r') as archive:
-                            archive.extractall(vpl_dir)
-                    except FileNotFoundError:
-                        print("Couldn't extract {} from zipfile".format(vpl_app_name))
-                    else:
-                        return actual_vpl_dir
+                    return actual_vpl_dir
+                    #try:
+                    #    with ZipFile(downloaded_app, 'r') as archive:
+                    #        archive.extractall(vpl_dir)
+                    #except FileNotFoundError:
+                    #    print("Couldn't extract {} from zipfile".format(vpl_app_name))
+                    #else:
+                    #    return actual_vpl_dir
             else:
                 print("Download aborted by user", file=sys.stderr)
                 return None

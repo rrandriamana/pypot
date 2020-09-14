@@ -9,6 +9,7 @@ import random
 import logging
 import argparse
 import webbrowser
+import subprocess
 
 from contextlib import closing
 from argparse import RawTextHelpFormatter
@@ -185,20 +186,22 @@ Examples:
         snap_static_port = 8888
         snap_static_server = HTTPServer(("0.0.0.0", snap_static_port), SimpleHTTPRequestHandler)
 
-        #from pypot.vpl.snap import download_snap_interactively
-        #static_app = download_snap_interactively()
-        #if static_app is None:
-        #    print("The static server was not started because the VPL app has not been downloaded")
-        #else:
-        #os.chdir(static_app)
+        from pypot.vpl.snap import download_snap_interactively
+        static_app = download_snap_interactively()
+        if static_app is None:
+            print("The static server was not started because the VPL app has not been downloaded")
+        else:
+        os.chdir(static_app)
         snap_static_server_process = Process(target=snap_static_server.serve_forever, args=())
         static_server_started = True
         snap_static_server_process.start()
+        os.chir('schratch-gui')
+        subprocess.Popen(['./node_modules/webpack-dev-server/bin/webpack-dev-server.js', '--host 0.0.0.0  --disable-host-check'])
 
         #snap_url = 'http://127.0.0.1:{}/snap.html'.format(snap_static_port)
         #block_url = 'http://{}:{}/snap-blocks.xml'.format(
         #    find_local_ip(), args.snap_port)
-        url = 'http://localhost:8601/' #'{}#open:{}'.format(snap_url, block_url)
+        url = 'http://127.0.0.1:8601/' #'{}#open:{}'.format(snap_url, block_url)
 
     with closing(start_poppy_with_services(args)):
 
