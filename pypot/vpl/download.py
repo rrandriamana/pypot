@@ -5,6 +5,7 @@ from wget import download
 from urllib.error import URLError
 from zipfile import ZipFile
 from pathlib import Path
+from .scratch import unix
 
 
 def get_pypot_datadir(app_name="pypot"):
@@ -54,7 +55,7 @@ def download_vpl_interactively(vpl_app_name, extract=False):
                 print("Downloading...")
                 try:
                     #downloaded_app = download(vpl_app_url, tempfile.gettempdir())
-                    subprocess.Popen(['sh', 'scratch.sh'])
+                    unix()
                 except URLError as e:
                     print("Cannot download the {} app : {}".format(vpl_app_name, str(e)), file=sys.stderr)
                 else:
