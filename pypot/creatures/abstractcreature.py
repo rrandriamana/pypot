@@ -140,7 +140,7 @@ class AbstractPoppyCreature(Robot):
         if use_snap:
             poppy_creature.snap = SnapRobotServer(
                 poppy_creature, snap_host, snap_port, quiet=snap_quiet)
-            snap_url = 'http://localhost:8601/'
+            snap_url = 'http://{}:8601/'.format(host)
             #block_url = 'http://{}:{}/snap-blocks.xml'.format(find_local_ip(), snap_port)
             #url = '{}#open:{}'.format(snap_url, block_url)
             url = snap_url
