@@ -195,13 +195,12 @@ Examples:
             snap_static_server_process = Process(target=snap_static_server.serve_forever, args=())
             static_server_started = True
             snap_static_server_process.start()
-            os.chir('schratch-gui')
-            subprocess.Popen(['./node_modules/webpack-dev-server/bin/webpack-dev-server.js', '--host 0.0.0.0  --disable-host-check'])
-
-            #snap_url = 'http://127.0.0.1:{}/snap.html'.format(snap_static_port)
-            #block_url = 'http://{}:{}/snap-blocks.xml'.format(
-            #    find_local_ip(), args.snap_port)
-            url = 'http://127.0.0.1:8601/' #'{}#open:{}'.format(snap_url, block_url)
+            os.chdir('scratch-gui')
+            subprocess.run(['echo', 'Scratch launching....'])
+            subprocess.Popen(['./node_modules/webpack-dev-server/bin/webpack-dev-server.js', '--host', '0.0.0.0', '--disable-host-check'])
+            subprocess.run("/usr/local/bin/wait-on http://localhost:8601/", shell=True)
+            subprocess.run(['echo', 'Scratch launched'])
+            url = 'http://localhost:8601/' 
 
     with closing(start_poppy_with_services(args)):
 

@@ -40,10 +40,10 @@ def download_vpl_interactively(vpl_app_name, extract=False):
     """
     pypot_datadir = get_pypot_datadir()
     vpl_dir = pypot_datadir / vpl_app_name
-    actual_vpl_dir = vpl_dir / vpl_app_name if extract else vpl_dir
+    actual_vpl_dir = vpl_dir / vpl_app_name #if extract else vpl_dir
     
     if vpl_dir.is_dir():
-        return actual_vpl_dir
+        return vpl_dir
     else:
         while True:
             response = input("This is the first time you are launching {}, it needs to be downloaded first. Proceed? [Y/n] ".format(vpl_app_name))
@@ -55,11 +55,11 @@ def download_vpl_interactively(vpl_app_name, extract=False):
                 print("Downloading...")
                 try:
                     #downloaded_app = download(vpl_app_url, tempfile.gettempdir())
-                    unix()
+                    unix(vpl_dir)
                 except URLError as e:
                     print("Cannot download the {} app : {}".format(vpl_app_name, str(e)), file=sys.stderr)
                 else:
-                    return actual_vpl_dir
+                    return vpl_dir
                     #try:
                     #    with ZipFile(downloaded_app, 'r') as archive:
                     #        archive.extractall(vpl_dir)
